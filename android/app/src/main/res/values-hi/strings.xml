@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: MIT
+     Hindi (Devanagari) translations. -->
+<resources>
+    <string name="app_name">जल साखी</string>
+    <string name="tagline">CHIRAG स्रोत निगरानी</string>
+
+    <!-- Login -->
+    <string name="login_title">लॉगिन</string>
+    <string name="phone_label">मोबाइल नंबर</string>
+    <string name="phone_hint">10 अंकों का नंबर</string>
+    <string name="send_otp">OTP भेजें</string>
+    <string name="otp_label">6 अंकों का OTP</string>
+    <string name="verify_otp">OTP जाँचें</string>
+    <string name="otp_sent">OTP भेज दिया गया है। SMS देखें।</string>
+    <string name="login_failed">लॉगिन विफल। कृपया पुनः प्रयास करें।</string>
+
+    <!-- Home -->
+    <string name="home_record_discharge">डिस्चार्ज दर्ज करें</string>
+    <string name="home_record_quality">जल गुणवत्ता दर्ज करें</string>
+    <string name="home_my_springs">मेरे स्रोत</string>
+    <string name="home_sync_status">सिंक स्थिति</string>
+    <string name="home_reminders">रिमाइंडर</string>
+    <string name="home_next_due">अगला तिमाही परीक्षण: %1$s</string>
+
+    <!-- Discharge -->
+    <string name="new_discharge">नया डिस्चार्ज मापन</string>
+    <string name="spring">स्रोत</string>
+    <string name="select_spring">स्रोत चुनें…</string>
+    <string name="gps_accuracy">GPS सटीकता: %1$.1f मी</string>
+    <string name="gps_locking">GPS खोज रहा है…</string>
+    <string name="gps_too_poor">GPS की सटीकता 20 मी से अधिक है — खुले आकाश में जाएँ।</string>
+    <string name="method">विधि</string>
+    <string name="method_v_notch">V-नौच</string>
+    <string name="method_volumetric">वॉल्यूमेट्रिक</string>
+    <string name="method_float">फ्लोट</string>
+    <string name="discharge_lpm">डिस्चार्ज (ली./मिनट)</string>
+    <string name="duration_sec">अवधि (सेकंड)</string>
+    <string name="weather">मौसम</string>
+    <string name="weather_dry">सूखा</string>
+    <string name="weather_light_rain">हल्की बारिश</string>
+    <string name="weather_heavy_rain">भारी बारिश</string>
+    <string name="weather_post_monsoon">पोस्ट-मानसून</string>
+    <string name="take_photo">फ़ोटो लें</string>
+    <string name="retake_photo">फिर से फ़ोटो लें</string>
+    <string name="photo_required">मापन का फ़ोटो ज़रूरी है।</string>
+    <string name="record_voice">वॉइस नोट (वैकल्पिक)</string>
+    <string name="notes">टिप्पणी</string>
+    <string name="save">सहेजें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="saved_locally">लोकल सहेजा गया — ऑनलाइन आते ही सिंक होगा।</string>
+
+    <!-- Quality -->
+    <string name="new_quality">नई जल गुणवत्ता प्रविष्टि</string>
+    <string name="param_ph">pH</string>
+    <string name="param_tds">TDS (मिग्रा/ली)</string>
+    <string name="param_turbidity">टर्बिडिटी (NTU)</string>
+    <string name="param_hardness">कठोरता (मिग्रा/ली CaCO₃)</string>
+    <string name="param_alkalinity">क्षारीयता (मिग्रा/ली CaCO₃)</string>
+    <string name="param_chloride">क्लोराइड (मिग्रा/ली)</string>
+    <string name="param_iron">आयरन (मिग्रा/ली)</string>
+    <string name="param_coliform">फीकल कोलिफ़ॉर्म (MPN/100 मि.ली)</string>
+    <string name="bis_range">BIS: %1$s – %2$s</string>
+    <string name="kit_batch">किट बैच ID</string>
+    <string name="kit_expiry">किट एक्सपायरी (YYYY-MM-DD)</string>
+    <string name="kit_expired">चेतावनी: यह किट एक्सपायर हो चुकी है।</string>
+
+    <!-- My Springs -->
+    <string name="last_discharge">पिछला डिस्चार्ज: %1$s</string>
+    <string name="last_quality">पिछला गुणवत्ता परीक्षण: %1$s</string>
+    <string name="never">कभी नहीं</string>
+
+    <!-- Sync -->
+    <string name="sync_pending">%1$d रिकॉर्ड सिंक के लिए बाक़ी</string>
+    <string name="sync_now">अभी सिंक करें</string>
+    <string name="sync_last">पिछला सिंक: %1$s</string>
+    <string name="sync_offline">ऑफ़लाइन — अपने आप पुनः प्रयास होगा।</string>
+
+    <!-- Reminders -->
+    <string name="reminders_title">रिमाइंडर</string>
+    <string name="no_reminders">अभी कोई रिमाइंडर नहीं।</string>
+
+    <!-- Common -->
+    <string name="settings">सेटिंग्स</string>
+    <string name="language">भाषा</string>
+    <string name="logout">लॉगआउट</string>
+    <string name="error_network">नेटवर्क त्रुटि। पुनः प्रयास करें।</string>
+    <string name="status_green">BIS के अंदर</string>
+    <string name="status_amber">सीमा पर</string>
+    <string name="status_red">असुरक्षित</string>
+</resources>

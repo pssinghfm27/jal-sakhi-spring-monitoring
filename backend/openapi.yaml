@@ -1,0 +1,303 @@
+# SPDX-License-Identifier: MIT
+openapi: 3.0.3
+info:
+  title: CHIRAG Jal Sakhi API
+  version: 0.1.0
+  description: Springshed monitoring backend for the CHIRAG programme.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8080
+    description: Local
+
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: {}
+    Spring:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        code: { type: string }
+        name_en: { type: string }
+        name_hi: { type: string }
+        lat: { type: number }
+        lon: { type: number }
+        altitude_m: { type: integer, nullable: true }
+        spring_type: { type: string, nullable: true }
+        project_name: { type: string, nullable: true }
+        village_name: { type: string }
+        block: { type: string }
+        district: { type: string }
+    DischargeReading:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        spring_id: { type: string, format: uuid }
+        krp_id: { type: string, format: uuid }
+        recorded_at: { type: string, format: date-time }
+        lat: { type: number }
+        lon: { type: number }
+        gps_accuracy_m: { type: number }
+        method: { type: string, enum: [v_notch, volumetric, float] }
+        discharge_lpm: { type: number }
+        weather: { type: string, enum: [dry, light_rain, heavy_rain, post_monsoon] }
+        photo_url: { type: string }
+        voice_url: { type: string, nullable: true }
+        notes: { type: string, nullable: true }
+        anomaly: { type: boolean }
+    QualityReading:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        spring_id: { type: string, format: uuid }
+        recorded_at: { type: string, format: date-time }
+        ph: { type: number, nullable: true }
+        tds: { type: number, nullable: true }
+        turbidity: { type: number, nullable: true }
+        hardness: { type: number, nullable: true }
+        alkalinity: { type: number, nullable: true }
+        chloride: { type: number, nullable: true }
+        iron: { type: number, nullable: true }
+        fecal_coliform: { type: integer, nullable: true }
+        kit_batch: { type: string, nullable: true }
+        kit_expiry: { type: string, format: date, nullable: true }
+        photo_url: { type: string }
+        anomaly: { type: boolean }
+
+security:
+  - bearer: []
+
+paths:
+  /health:
+    get:
+      summary: Health probe
+      security: []
+      responses:
+        '200': { description: OK }
+
+  /auth/otp/request:
+    post:
+      summary: Request 6-digit OTP via SMS for a phone number
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone]
+              properties:
+                phone: { type: string, example: "+919999900001" }
+      responses:
+        '200': { description: OTP sent }
+        '429': { description: Rate-limited, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+
+  /auth/otp/verify:
+    post:
+      summary: Verify OTP and obtain a JWT
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [phone, code]
+              properties:
+                phone: { type: string }
+                code:  { type: string, example: "123456" }
+      responses:
+        '200':
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+                  user: { type: object }
+
+  /auth/login:
+    post:
+      summary: Email/password login for managers and admins
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+      responses:
+        '200': { description: Authenticated }
+
+  /krp/profile:
+    get:
+      summary: Current user profile
+      responses:
+        '200': { description: OK }
+
+  /krp/springs:
+    get:
+      summary: Springs assigned to the current KRP (or all, for manager/admin)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/Spring' } }
+
+  /springs/master:
+    get:
+      summary: Full active spring master list (for offline sync)
+      responses:
+        '200': { description: OK }
+
+  /springs/{id}:
+    get:
+      summary: Spring details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: OK }
+
+  /readings/discharge:
+    post:
+      summary: Submit a discharge reading (multipart with photo)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [spring_id, recorded_at, lat, lon, gps_accuracy_m, method, discharge_lpm, weather, photo]
+              properties:
+                spring_id: { type: string, format: uuid }
+                client_uuid: { type: string, format: uuid }
+                recorded_at: { type: string, format: date-time }
+                lat: { type: number }
+                lon: { type: number }
+                gps_accuracy_m: { type: number }
+                method: { type: string }
+                discharge_lpm: { type: number }
+                duration_sec: { type: integer }
+                weather: { type: string }
+                notes: { type: string }
+                photo: { type: string, format: binary }
+                voice: { type: string, format: binary }
+      responses:
+        '201': { description: Created }
+
+  /readings/quality:
+    post:
+      summary: Submit a water-quality reading (multipart with photo)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [spring_id, recorded_at, lat, lon, photo]
+              properties:
+                spring_id: { type: string, format: uuid }
+                client_uuid: { type: string, format: uuid }
+                recorded_at: { type: string, format: date-time }
+                lat: { type: number }
+                lon: { type: number }
+                ph: { type: number }
+                tds: { type: number }
+                turbidity: { type: number }
+                hardness: { type: number }
+                alkalinity: { type: number }
+                chloride: { type: number }
+                iron: { type: number }
+                fecal_coliform: { type: integer }
+                kit_batch: { type: string }
+                kit_expiry: { type: string, format: date }
+                photo: { type: string, format: binary }
+      responses:
+        '201': { description: Created }
+
+  /readings:
+    get:
+      summary: Query readings
+      parameters:
+        - in: query
+          name: spring_id
+          schema: { type: string, format: uuid }
+        - in: query
+          name: kind
+          schema: { type: string, enum: [discharge, quality] }
+        - in: query
+          name: from
+          schema: { type: string, format: date-time }
+        - in: query
+          name: to
+          schema: { type: string, format: date-time }
+      responses:
+        '200': { description: OK }
+
+  /dashboard/summary:
+    get: { summary: Counts + status mix + recent activity, responses: { '200': { description: OK } } }
+  /dashboard/map:
+    get: { summary: Map markers with traffic-light status, responses: { '200': { description: OK } } }
+  /dashboard/spring/{id}/trends:
+    get:
+      summary: Discharge & quality time-series for a spring, plus health score
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: OK }
+  /dashboard/blocks:
+    get: { summary: Block-wise rollup table, responses: { '200': { description: OK } } }
+  /dashboard/alerts:
+    get: { summary: Anomalies and overdue sampling, responses: { '200': { description: OK } } }
+  /dashboard/krp-performance:
+    get: { summary: KRP reporting frequency table, responses: { '200': { description: OK } } }
+
+  /reminders:
+    get: { summary: List reminders, responses: { '200': { description: OK } } }
+  /reminders/test:
+    post: { summary: Manually trigger the daily reminder job, responses: { '200': { description: OK } } }
+  /reminders/flush:
+    post: { summary: Send all pending reminders right now, responses: { '200': { description: OK } } }
+  /reminders/notify:
+    post:
+      summary: Send an ad-hoc SMS to a KRP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [krp_id, message]
+              properties:
+                krp_id: { type: string, format: uuid }
+                message: { type: string, maxLength: 280 }
+      responses:
+        '200': { description: OK }

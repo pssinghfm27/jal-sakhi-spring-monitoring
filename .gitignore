@@ -1,0 +1,35 @@
+# env / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+dist/
+build/
+
+# android
+.gradle/
+local.properties
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+release/
+
+# uploads (runtime media)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+*.swp

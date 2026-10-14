@@ -1,0 +1,6 @@
+code,name_en,name_hi,village,gp,block,district,lat,lon,altitude_m,spring_type,project_name
+CHG-DGL-001,Digoli Dhara,डिगोली धारा,Digoli,Digoli,Dhauladevi,Almora,29.6105,79.7654,1545,depression,Digoli Springshed
+CHG-DGL-002,Digoli Upper,डिगोली ऊपरी,Digoli,Digoli,Dhauladevi,Almora,29.6131,79.7681,1612,contact,Digoli Springshed
+CHG-BRG-002,Burguna Naula 2,बुर्गुना नौला 2,Burguna,Burguna,Dhauladevi,Almora,29.6188,79.7501,1561,depression,DTR Burguna
+CHG-BRG-003,Burguna Upper Source,बुर्गुना ऊपरी स्रोत,Burguna,Burguna,Dhauladevi,Almora,29.6217,79.7549,1601,fracture,DTR Burguna
+CHG-CBL-002,Chhidiya Upper,छिड़िया ऊपरी,Chhidiyabahali,Bhayanpur,Bhainsiyachhana,Almora,29.5528,79.7037,1545,contact,Chhidiyabahali Intervention

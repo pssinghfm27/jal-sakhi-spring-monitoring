@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: MIT
+     Default: HTTPS only. We explicitly allow cleartext to:
+       • 10.0.2.2     (emulator's host loopback)
+       • localhost    (local dev)
+       • <SERVER_IP>  (CHIRAG HQ static IP — fallback if Let's Encrypt isn't
+                         available on the HQ network. Once HTTPS via sslip.io
+                         works, the app will use https://103-88-57-138.sslip.io
+                         and this cleartext path won't be exercised.) -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.0.2.2</domain>
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="false"><SERVER_IP></domain>
+    </domain-config>
+</network-security-config>

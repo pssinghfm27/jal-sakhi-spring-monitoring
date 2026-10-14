@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: MIT
+     Debug-only override: allow cleartext HTTP to ANY host, so you can test
+     a debug APK against a Mac/laptop running the backend on http://<lan-ip>:8080
+     without baking each LAN IP into the main config.
+
+     The release config (main/res/xml/network_security_config.xml) stays strict:
+     HTTPS-only for everything except the listed exceptions. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
+</network-security-config>

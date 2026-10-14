@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: MIT
+services:
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: chirag
+      POSTGRES_PASSWORD: chirag
+      POSTGRES_DB: jalsakhi
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chirag -d jalsakhi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      JWT_SECRET: ${JWT_SECRET:-please-change-me-in-production}
+      PGHOST: db
+      PGPORT: 5432
+      PGUSER: chirag
+      PGPASSWORD: chirag
+      PGDATABASE: jalsakhi
+      OTP_DEV_LOG: ${OTP_DEV_LOG:-true}
+      SMS_PROVIDER: ${SMS_PROVIDER:-fast2sms}
+      FAST2SMS_API_KEY: ${FAST2SMS_API_KEY:-}
+      FAST2SMS_SENDER_ID: ${FAST2SMS_SENDER_ID:-CHIRAG}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8080}
+    volumes:
+      - uploads:/app/uploads
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
+  uploads:

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: MIT -->
+<resources>
+    <color name="chirag_primary">#FF2E7D32</color>
+    <color name="chirag_water_blue">#FF0277BD</color>
+    <color name="chirag_warning">#FFF9A825</color>
+    <color name="chirag_alert">#FFC62828</color>
+    <color name="chirag_bg">#FFFAFAF7</color>
+    <color name="chirag_surface">#FFFFFFFF</color>
+    <color name="chirag_on_surface">#FF1B1B1B</color>
+    <color name="chirag_muted">#FF6B7280</color>
+</resources>
