@@ -70,7 +70,7 @@ npm run dev
 ```
 Then open `http://localhost:8080/health` and `http://localhost:8080/docs` (Swagger). Android and dashboard setup: [`COMPLETE_SETUP_GUIDE.md`](COMPLETE_SETUP_GUIDE.md).
 
-A signed KRP APK is attached to this repository's **Releases**.
+A signed KRP APK is in [`apk/`](apk/).
 
 ## My role
 
